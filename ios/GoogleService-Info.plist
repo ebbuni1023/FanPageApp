@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>177920797564-j6b1b8fg9860k8f14v393etop1crddqp.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.177920797564-j6b1b8fg9860k8f14v393etop1crddqp</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB3pxP6_cBGgwPEcpXhPzgq0r_OR-Dmnxw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>177920797564</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.FanPage</string>
+	<key>PROJECT_ID</key>
+	<string>summerfan-4905d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>summerfan-4905d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:177920797564:ios:8aa91c71896056d0c712f9</string>
+	<key>DATABASE_URL</key>
+	<string>https://summerfan-4905d-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
