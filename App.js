@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Component } from 'react';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-// GoogleSignin.configure({
-//   webClientId: '177920797564-hadbcbgssgf848mod9bp85e77av7gbj8.apps.googleusercontent.com',
-// });
+GoogleSignin.configure({
+  webClientId: '177920797564-hadbcbgssgf848mod9bp85e77av7gbj8.apps.googleusercontent.com',
+});
 import {
   SafeAreaView,
   Text,
@@ -15,9 +15,9 @@ import firebase from 'firebase'
 // import { firebaseConfig } from './firestore';
 // firebase.initializeApp(firebaseConfig);
 import auth from '@react-native-firebase/auth';
-// GoogleSignin.configure({
-//   webClientId: '177920797564-hadbcbgssgf848mod9bp85e77av7gbj8.apps.googleusercontent.com',
-// });
+GoogleSignin.configure({
+  webClientId: '177920797564-hadbcbgssgf848mod9bp85e77av7gbj8.apps.googleusercontent.com',
+});
 function LoginApp() {
 
   // Set an initializing state whilst Firebase connects
