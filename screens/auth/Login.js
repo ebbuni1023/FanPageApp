@@ -16,7 +16,6 @@ export default function Register() {
    const [email, setEmail] = useState()
    const [password, setPassword] = useState()
    const [name, setName] = useState()
-   const [displayPicture, setDisplayPicture] = useState()
    
    function onLogin() {
       auth().signInWithEmailAndPassword(email, password)
