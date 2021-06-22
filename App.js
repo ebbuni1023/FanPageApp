@@ -46,7 +46,7 @@ export default function App() {
 
   if(!loggedIn) {
     return (
-      <NavigationContainer>
+      <NavigationContainer >
         <Tab.Navigator initialRouteName='Login'>
           <Tab.Screen name='Login' component={Login} />
           <Tab.Screen name='Register' component={Register} />

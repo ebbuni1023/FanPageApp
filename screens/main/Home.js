@@ -11,7 +11,7 @@ export default function Home({ navigation }) {
       .then(() => console.log('User Signed out!'));
    }
    return (
-      <View>
+      <View style = {styles.logoffConatiner}>
         <Button title="LogOff" onPress={this.logoff} />
       </View>
    )
@@ -28,6 +28,11 @@ signOut = async () => {
    }
  };
 const styles = StyleSheet.create({
+   logoffConatiner:{
+      justifyContent:'center',
+      alignItems: 'center',
+      flex: 1,
+   },
    header: {
       marginHorizontal: 10,
       marginVertical: 10
