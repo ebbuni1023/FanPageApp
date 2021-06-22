@@ -1,118 +1,38 @@
-import React, { useState, useEffect, Component } from 'react';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-GoogleSignin.configure({
-  webClientId: '177920797564-hadbcbgssgf848mod9bp85e77av7gbj8.apps.googleusercontent.com',
-});
-import {
-  SafeAreaView,
-  Text,
-  StyleSheet,
-  View,
-  Button
-} from 'react-native';
+import * as React from 'react';
+import { Button, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import firebase from 'firebase'
-// import { firebaseConfig } from './firestore';
-// firebase.initializeApp(firebaseConfig);
-import auth from '@react-native-firebase/auth';
-GoogleSignin.configure({
-  webClientId: '177920797564-hadbcbgssgf848mod9bp85e77av7gbj8.apps.googleusercontent.com',
-});
-function LoginApp() {
+import HomeScreen from './src/Pages/Login';
+import SignUp from './src/Pages/SignUp';
+// function ProfileScreen({ navigation }) {
+//   return (
+//     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//       <Button
+//         title="Go to Notifications"
+//         onPress={() => navigation.navigate('Notifications')}
+//       />
+//       <Button title="Go back" onPress={() => navigation.goBack()} />
+//     </View>
+//   );
+// }
 
-  // Set an initializing state whilst Firebase connects
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
+const Stack = createStackNavigator();
 
-  // Handle user state changes
-  function onAuthStateChanged(user) {
-    setUser(user);
-    if (initializing) setInitializing(false);
-  }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
-
-  if (initializing) return null;
-
-  if (!user) {
-    return (
-      <View>
-        <Text>Login</Text>
-      </View>
-    );
-  }
-
+function MyStack() {
   return (
-    <View>
-      <Text>Welcome {user.email}</Text>
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}/>
+
+    </Stack.Navigator>
   );
 }
 
-const App = () => {
-  // function componentWillMount (){
-  //   GoogleSignin.configure({
-  //     webClientId: '177920797564-hadbcbgssgf848mod9bp85e77av7gbj8.apps.googleusercontent.com',
-  //   });
-  // }
-  // Email and password
-  createUser = () => {
-    auth()
-  .createUserWithEmailAndPassword('rr.doe@example.com', 'SuperSecretPassword!')
-  .then(() => {
-    console.log('User account created & signed in!');
-  })
-  .catch(error => {
-    if (error.code === 'auth/email-already-in-use') {
-      console.log('That email address is already in use!');
-    }
-
-    if (error.code === 'auth/invalid-email') {
-      console.log('That email address is invalid!');
-    }
-
-    console.error(error);
-  });
-  }
-
-  // GOOGLE LOGIN
-  onGoogleButtonPress = async () => {
-    // Get the users ID token
-    const { idToken } = await GoogleSignin.signIn();
-  
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-  
-    // Sign-in the user with the credential
-    return auth().signInWithCredential(googleCredential);
-  }
-  // LOG OFF
-  logoff = () => {
-    auth()
-    .signOut()
-    .then(() => console.log('User signed out!'));
-    }
-
+export default function App() {
   return (
-    <View style = {styles.container}>
-      <LoginApp/>
-      <Button title="create User" onPress={this.createUser} />
-      <Button title="LogOff" onPress={this.logoff} />
-      <Button
-      title="Google Sign-In"
-      onPress={() => this.onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}/>
-    </View>
-  )
+    <NavigationContainer>
+      <MyStack />
+    </NavigationContainer>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems:'center',
-  }
-})
-export default App;
