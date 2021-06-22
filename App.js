@@ -1,38 +1,69 @@
-import * as React from 'react';
-import { Button, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React, { useState, useEffect } from 'react'
+import { ActivityIndicator } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
-import HomeScreen from './src/Pages/Login';
-import SignUp from './src/Pages/SignUp';
-// function ProfileScreen({ navigation }) {
-//   return (
-//     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//       <Button
-//         title="Go to Notifications"
-//         onPress={() => navigation.navigate('Notifications')}
-//       />
-//       <Button title="Go back" onPress={() => navigation.goBack()} />
-//     </View>
-//   );
-// }
+import auth from '@react-native-firebase/auth'
 
-const Stack = createStackNavigator();
+import Login from './screens/auth/Login'
+import Register from './screens/auth/Register'
+import Home from './screens/main/Home'
 
-function MyStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
-      <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}/>
 
-    </Stack.Navigator>
-  );
-}
+const Stack = createStackNavigator()
+const Tab = createMaterialTopTabNavigator()
 
 export default function App() {
+
+  const [loggedIn, setLoggedIn]  = useState(false)
+  const [loading, setLoading] = useState(true)
+
+
+  async function onAuthStateChanged(user) {
+    if(user) {
+      setLoggedIn(true)
+    }
+    else {
+      setLoggedIn(false)
+    }
+    if(loading) setLoading(false)
+  }
+
+  useEffect(() => {
+    const subscribe = auth().onAuthStateChanged(onAuthStateChanged)
+    return subscribe
+  }, [])
+
+  if(loading) {
+    return (
+      <ActivityIndicator
+        size={32}
+        color='gray'
+      />
+    )
+  }
+
+  if(!loggedIn) {
+    return (
+      <NavigationContainer>
+        <Tab.Navigator initialRouteName='Login'>
+          <Tab.Screen name='Login' component={Login} />
+          <Tab.Screen name='Register' component={Register} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    )
+  }
+
   return (
     <NavigationContainer>
-      <MyStack />
+      <Stack.Navigator initialRouteName='Home'
+        screenOptions={{
+          headerShown: false
+        }}
+      >
+        <Stack.Screen name='Home' component={Home} />
+      </Stack.Navigator>
     </NavigationContainer>
-  );
+  )
 }

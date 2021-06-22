@@ -12,6 +12,8 @@ target 'FanPage' do
     :hermes_enabled => false
   )
 
+  pod 'RNFBStorage', :path => '../node_modules/@react-native-firebase/storage'
+
   target 'FanPageTests' do
     inherit! :complete
     # Pods for testing
