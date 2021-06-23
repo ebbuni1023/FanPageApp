@@ -72,7 +72,7 @@ export default function Register() {
 
          <TextInput
             value={password}
-            placeholder='Password'
+            placeholder='Password at least 8 digits'
             style={globalStyles.primaryInput}
             onChangeText={(text) => setPassword(text)}
          />

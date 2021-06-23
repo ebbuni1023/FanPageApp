@@ -16,7 +16,7 @@ export default function Register() {
    const [email, setEmail] = useState()
    const [password, setPassword] = useState()
    const [name, setName] = useState()
-   
+
    function onLogin() {
       auth().signInWithEmailAndPassword(email, password)
    }
@@ -60,6 +60,8 @@ export default function Register() {
         offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
       });
     }, []);
+
+
    return (
       <View style={styles.container}>
 
@@ -80,6 +82,7 @@ export default function Register() {
          <Button
             title='Login'
             onPress={onLogin}
+            
          />
          
          <View style={styles.sectionContainer}>

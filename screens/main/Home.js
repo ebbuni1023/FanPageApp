@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, FlatList, StyleSheet, Modal, Button, TouchableOpacity } from 'react-native'
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
+import { TextInput } from 'react-native-gesture-handler';
+import Login from '../auth/Login';
+import Register from '../auth/Register';
 
+import moment from "moment";
 
 const ModalPop = ({visible, children})=> {
    const [showModal, setShowModal] = React.useState(visible);
@@ -24,8 +30,12 @@ const ModalPop = ({visible, children})=> {
    </Modal>
 };
 
-
 export default function Home({ navigation }) {
+   const [userId, setuserId] = useState()
+   const [firstName, setfirstName] = useState()
+   const [lastName, setLastName] = useState()
+   const [email, setEmail] = useState()
+   const [password, setPassword] = useState()
 
    logoff = () => {
       auth ()
@@ -36,9 +46,22 @@ export default function Home({ navigation }) {
    // MODAL
    const [visible, setVisible] = React.useState(false);
 
+   // POST
+   const ref = firestore().collection('Post');
+   const [post, setPost] = useState('');
+   const today = moment();
+   const DateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+   async function addPost(){
+      await ref.add({
+         Message: post,
+         DateTime:moment().format('YYYY-MM-DD HH:mm:ss'),
+         UserId: {},
+ 
+      });
+      setPost('');
+   }
    return (
       <View style = {styles.logoffConatiner}>
-
         <Button title="LogOff" onPress={this.logoff} />
          <ModalPop visible = {visible}>
             <View style = {{alignItems: 'center'}}>
@@ -48,11 +71,17 @@ export default function Home({ navigation }) {
                   </TouchableOpacity>
                </View>
             </View>
-            <Text> ADD </Text>
+            <Text> POST YOUR WORDS </Text>
+
+            <TextInput label={'write post'} value={post} onChangeText={setPost} />
+            <Button title ="POST" onPress={() => addPost()}> Add POST </Button>
+
          </ModalPop>
         <View style = {styles.addContainer}>
-           <Text>To upload the message please click below + sign</Text>
-           <Button title="+" onPress = {() => setVisible(true)}></Button>
+           <Text>To upload the message please click below + sign </Text>
+           <View style = {styles.pluscontainer} AdminPlus = {true}>
+           <Button title="+" onPress = {() => setVisible(true) }></Button>
+           </View>
         </View>
       </View>
    )
@@ -104,7 +133,7 @@ const styles = StyleSheet.create({
 
    header: {
       width: '100%',
-      height: 510,
+      height: 50,
       flexDirection: 'column',
       alignItems: "flex-end",
       justifyContent: 'flex-start'
