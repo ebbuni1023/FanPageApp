@@ -5,6 +5,7 @@ import firestore from '@react-native-firebase/firestore'
 import storage from '@react-native-firebase/storage'
 
 import { globalStyles } from '../../utils/globalStyles'
+import moment from "moment";
 
 export default function Register() {
 
@@ -13,14 +14,16 @@ export default function Register() {
    const [lastName, setLastName] = useState()
    const [email, setEmail] = useState()
    const [password, setPassword] = useState()
-   
 
    async function onRegister() {
       if(!email && !password) {
          return
       }
       try {
-         const { user: { uid } } = await auth().createUserWithEmailAndPassword(email, password, firstName, lastName)
+        const today = moment();
+        const registerDatetime = moment().format('YYYY-MM-DD HH:mm:ss');
+         const role = "customer";
+         const { user: { uid } } = await auth().createUserWithEmailAndPassword(email, password, firstName, lastName, registerDatetime, role)
 
          firestore().collection('users')
          .doc(uid)
@@ -28,7 +31,9 @@ export default function Register() {
             email,
             firstName,
             lastName,
-            userId
+            userId,
+            registerDatetime,
+            role
          })
          .then(() => console.log('Done'))
       } catch(error) {
@@ -38,34 +43,34 @@ export default function Register() {
 
    return (
       <View style={styles.container}>
-         <TextInput 
+         <TextInput
             value={userId}
             placeholder='userId'
             style={globalStyles.primaryInput}
             onChangeText={(text) => setuserId(text)}
          />
-         <TextInput 
+         <TextInput
             value={firstName}
             placeholder='First Name'
             style={globalStyles.primaryInput}
             onChangeText={(text) => setfirstName(text)}
          />
 
-         <TextInput 
+         <TextInput
             value={lastName}
             placeholder='Last Name'
             style={globalStyles.primaryInput}
             onChangeText={(text) => setLastName(text)}
-         /> 
+         />
 
-         <TextInput 
+         <TextInput
             value={email}
             placeholder='Email'
             style={globalStyles.primaryInput}
             onChangeText={(text) => setEmail(text)}
          />
 
-         <TextInput 
+         <TextInput
             value={password}
             placeholder='Password'
             style={globalStyles.primaryInput}

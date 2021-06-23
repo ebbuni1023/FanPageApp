@@ -5,7 +5,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
 import auth from '@react-native-firebase/auth'
-
 import Login from './screens/auth/Login'
 import Register from './screens/auth/Register'
 import Home from './screens/main/Home'
