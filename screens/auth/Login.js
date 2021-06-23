@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { View, TextInput, Text, StyleSheet, Button, } from 'react-native'
+import { View, Text, StyleSheet, Button, } from 'react-native'
 import auth from '@react-native-firebase/auth'
-
+import { TextInput } from 'react-native-paper';
 import { globalStyles } from '../../utils/globalStyles'
 import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
 GoogleSignin.configure({
