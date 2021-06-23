@@ -30,7 +30,7 @@ const ModalPop = ({visible, children})=> {
    </Modal>
 };
 
-export default function Home({ navigation, role }) {
+export default function Home({ navigation, role, userId }) {
 
    logoff = () => {
       auth ()
@@ -50,10 +50,9 @@ export default function Home({ navigation, role }) {
       await ref.add({
          Message: post,
          DateTime:moment().format('YYYY-MM-DD HH:mm:ss'),
-         UserId: {},
- 
+         UniqueID: userId,
       });
-      setPost('');
+      // setPost('');
    }
    return (
       <View style = {styles.logoffConatiner}>
@@ -76,6 +75,7 @@ export default function Home({ navigation, role }) {
            <Text>To upload the message please click below + sign </Text>
            <View style = {styles.pluscontainer}>
               {role === "customer" ?  <Text>Customer</Text> : <Button title="+" onPress = {() => setVisible(true) }></Button>}
+              <Text>{post}</Text>
            </View>
         </View>
       </View>

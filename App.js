@@ -20,7 +20,7 @@ export default function App() {
   const [loading, setLoading] = useState(true)
 
   const [role, setRole] = useState('');
-
+const [userId, setuserId] = useState('');
   async function onAuthStateChanged(user) {
     if(user) {
       // console.log('user', user.uid);
@@ -34,6 +34,8 @@ export default function App() {
           // let role = childData.role;
           // console.log('role', role);
           setRole(childData.role);
+          setuserId(childData.userId);
+
         })
     }
     else {
@@ -68,6 +70,7 @@ export default function App() {
   }
 
   console.log('role', role)
+  console.log('userId', userId)
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home'
@@ -76,7 +79,7 @@ export default function App() {
         }}
       >
         <Stack.Screen name='Home' >
-          {props => <Home {...props} role={role} />}
+          {props => <Home {...props} role={role} userId={userId}/>}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
