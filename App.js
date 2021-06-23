@@ -20,7 +20,7 @@ export default function App() {
   const [loading, setLoading] = useState(true)
 
   const [role, setRole] = useState('');
-const [userId, setuserId] = useState('');
+  const [userId, setuserId] = useState('');
   async function onAuthStateChanged(user) {
     if(user) {
       // console.log('user', user.uid);

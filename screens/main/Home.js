@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, FlatList, StyleSheet, Modal, Button, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, StyleSheet, Modal, Button, TouchableOpacity, Alert } from 'react-native'
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -36,6 +36,9 @@ export default function Home({ navigation, role, userId }) {
       auth ()
       .signOut()
       .then(() => console.log('User Signed out!'));
+      return (
+         Alert.alert('u signed out')
+      )
    }
 
    // MODAL
@@ -68,7 +71,7 @@ export default function Home({ navigation, role, userId }) {
             <Text> POST YOUR WORDS </Text>
 
             <TextInput label={'write post'} value={post} onChangeText={setPost} />
-            <Button title ="POST" onPress={() => addPost()}> Add POST </Button>
+            <Button title ="POST" onPress={() => addPost() & setVisible(false)}> Add POST </Button>
 
          </ModalPop>
         <View style = {styles.addContainer}>
@@ -77,6 +80,13 @@ export default function Home({ navigation, role, userId }) {
               {role === "customer" ?  <Text>Customer</Text> : <Button title="+" onPress = {() => setVisible(true) }></Button>}
               <Text>{post}</Text>
            </View>
+           {/* <FlatList 
+              data={[
+                 {key: [post]},
+              ]}
+              renderItem={({item}) => <Text style={{flex: 1, fontSize: 12, alignItems: 'center', }}>
+                 {item.key}
+              </Text>}/> */}
         </View>
       </View>
    )

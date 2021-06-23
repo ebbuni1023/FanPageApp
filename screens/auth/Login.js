@@ -21,23 +21,18 @@ export default function Register() {
       auth().signInWithEmailAndPassword(email, password)
    }
 
-   signOut = async () => {
-      try {
-        await GoogleSignin.revokeAccess();
-        await GoogleSignin.signOut();
-        setloggedIn(false);
-        setuserInfo([]);
-      } catch (error) {
-        console.error(error);
-      }
-    };
    // GOOGLE LOGIN
    _signIn = async () => {
-   try {
-      await GoogleSignin.hasPlayServices();
-      const {accessToken, idToken} = await GoogleSignin.signIn();
-      setloggedIn(true);
-   } catch (error) {
+      try {
+        await GoogleSignin.hasPlayServices();
+        const {accessToken, idToken} = await GoogleSignin.signIn();
+        setloggedIn(true);
+        const credential = auth.GoogleAuthProvider.credential(
+          idToken,
+          accessToken,
+        );
+        await auth().signInWithCredential(credential);
+      } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
          // user cancelled the login flow
          alert('Cancel');
@@ -56,12 +51,23 @@ export default function Register() {
    useEffect(() => {
       GoogleSignin.configure({
         scopes: ['email'], // what API you want to access on behalf of the user, default is email and profile
-        webClientId: '177920797564-hadbcbgssgf848mod9bp85e77av7gbj8.apps.googleusercontent.com',
+        webClientId: '177920797564-j6b1b8fg9860k8f14v393etop1crddqp.apps.googleusercontent.com',
         offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
       });
     }, []);
 
+    signOut = async () => {
+      try {
+        await GoogleSignin.revokeAccess();
+        await GoogleSignin.signOut();
+        setloggedIn(false);
+        setuserInfo([]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
+    
    return (
       <View style={styles.container}>
 
