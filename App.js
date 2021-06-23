@@ -8,6 +8,7 @@ import auth from '@react-native-firebase/auth'
 import Login from './screens/auth/Login'
 import Register from './screens/auth/Register'
 import Home from './screens/main/Home'
+import firestore from '@react-native-firebase/firestore';
 
 
 const Stack = createStackNavigator()
@@ -18,10 +19,22 @@ export default function App() {
   const [loggedIn, setLoggedIn]  = useState(false)
   const [loading, setLoading] = useState(true)
 
+  const [role, setRole] = useState('');
 
   async function onAuthStateChanged(user) {
     if(user) {
-      setLoggedIn(true)
+      // console.log('user', user.uid);
+      setLoggedIn(true);
+      firestore().collection('users')
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          let childData = doc.data();
+          // console.log('childData', childData);
+          // let role = childData.role;
+          // console.log('role', role);
+          setRole(childData.role);
+        })
     }
     else {
       setLoggedIn(false)
@@ -54,13 +67,17 @@ export default function App() {
     )
   }
 
+  console.log('role', role)
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home'
         screenOptions={{
-          headerShown: true
-        }}>
-        <Stack.Screen name='Home' component={Home} />
+          headerShown: false
+        }}
+      >
+        <Stack.Screen name='Home' >
+          {props => <Home {...props} role={role} />}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   )
