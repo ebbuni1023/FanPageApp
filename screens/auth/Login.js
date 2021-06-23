@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { View, TextInput, Text, StyleSheet, Button, } from 'react-native'
+import { View, Text, StyleSheet, Button, } from 'react-native'
 import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
+import { TextInput } from 'react-native-paper';
 
 import { globalStyles } from '../../utils/globalStyles'
 import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
@@ -19,6 +21,17 @@ export default function Register() {
 
    function onLogin() {
       auth().signInWithEmailAndPassword(email, password)
+        .then((firebaseUser) => {
+          // console.log('firebaseUser', firebaseUser.user.uid);
+            firestore().collection('users').doc(firebaseUser.user.uid).get()
+              .then((doc) => {
+                let childData = doc.data();
+                console.log('childData', childData);
+                let role = childData.role;
+                console.log('role', role);
+              })
+          }
+        )
    }
 
    signOut = async () => {
@@ -60,21 +73,20 @@ export default function Register() {
         offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
       });
     }, []);
-
-
    return (
       <View style={styles.container}>
 
-         <TextInput 
+         <TextInput
             value={email}
             placeholder='Email'
             style={globalStyles.primaryInput}
             onChangeText={(text) => setEmail(text)}
          />
 
-         <TextInput 
+         <TextInput
             value={password}
             placeholder='Password'
+            secureTextEntry={true}
             style={globalStyles.primaryInput}
             onChangeText={(text) => setPassword(text)}
          />
@@ -82,9 +94,8 @@ export default function Register() {
          <Button
             title='Login'
             onPress={onLogin}
-            
          />
-         
+
          <View style={styles.sectionContainer}>
               <GoogleSigninButton
                 style={{width: 192, height: 48}}
@@ -100,7 +111,7 @@ export default function Register() {
                   onPress={this.signOut}
                   title="LogOut"
                   color="red"></Button>
-                  
+
               )}
          </View>
       </View>

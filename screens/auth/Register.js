@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { View, TextInput, StyleSheet, Button, Text, TouchableOpacity, Image } from 'react-native'
+import { View,  StyleSheet, Button, Text, TouchableOpacity, Image } from 'react-native'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import storage from '@react-native-firebase/storage'
+import { TextInput } from 'react-native-paper';
 
 import { globalStyles } from '../../utils/globalStyles'
 import moment from "moment";
@@ -72,6 +73,7 @@ export default function Register() {
 
          <TextInput
             value={password}
+            secureTextEntry={true}
             placeholder='Password at least 8 digits'
             style={globalStyles.primaryInput}
             onChangeText={(text) => setPassword(text)}

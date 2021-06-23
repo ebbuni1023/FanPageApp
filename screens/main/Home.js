@@ -30,12 +30,7 @@ const ModalPop = ({visible, children})=> {
    </Modal>
 };
 
-export default function Home({ navigation }) {
-   const [userId, setuserId] = useState()
-   const [firstName, setfirstName] = useState()
-   const [lastName, setLastName] = useState()
-   const [email, setEmail] = useState()
-   const [password, setPassword] = useState()
+export default function Home({ navigation, role }) {
 
    logoff = () => {
       auth ()
@@ -79,8 +74,8 @@ export default function Home({ navigation }) {
          </ModalPop>
         <View style = {styles.addContainer}>
            <Text>To upload the message please click below + sign </Text>
-           <View style = {styles.pluscontainer} AdminPlus = {true}>
-           <Button title="+" onPress = {() => setVisible(true) }></Button>
+           <View style = {styles.pluscontainer}>
+              {role === "customer" ?  <Text>Customer</Text> : <Button title="+" onPress = {() => setVisible(true) }></Button>}
            </View>
         </View>
       </View>
