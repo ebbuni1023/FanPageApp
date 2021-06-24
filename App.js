@@ -9,6 +9,7 @@ import Login from './screens/auth/Login'
 import Register from './screens/auth/Register'
 import Home from './screens/main/Home'
 import firestore from '@react-native-firebase/firestore';
+import SplashScreen from 'react-native-splash-screen';
 
 
 const Stack = createStackNavigator()
@@ -49,18 +50,31 @@ export default function App() {
     return subscribe
   }, [])
 
-  if(loading) {
-    return (
-      <ActivityIndicator
-        size={32}
-        color='gray'
-      />
-    )
-  }
+
+  /* SPLASH SCREEN */
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //       SplashScreen.hide();
+  //   }, 1000);
+  // }, [])
+  /* SPLASH SCREEN */
+
+  const onNavigationReady = () => {
+    SplashScreen.hide(); // just hide the splash screen after navigation ready
+}
+
+  // if(loading) {
+  //   return (
+  //     <ActivityIndicator
+  //       size={32}
+  //       color='gray'
+  //     />
+  //   )
+  // }
 
   if(!loggedIn) {
     return (
-      <NavigationContainer >
+      <NavigationContainer onReady={onNavigationReady}>
         <Tab.Navigator initialRouteName='Login'>
           <Tab.Screen name='Login' component={Login} />
           <Tab.Screen name='Register' component={Register} />
@@ -71,7 +85,9 @@ export default function App() {
 
   // console.log('role', role)
   // console.log('userId', userId)
-  
+
+
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home'
