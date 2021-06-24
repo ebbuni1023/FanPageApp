@@ -69,8 +69,8 @@ export default function App() {
     )
   }
 
-  console.log('role', role)
-  console.log('userId', userId)
+  // console.log('role', role)
+  // console.log('userId', userId)
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home'

@@ -34,27 +34,6 @@ const ModalPop = ({visible, children})=> {
    </Modal>
 };
 
-// const ModalPop1 = ({visible, children1})=> {
-//    const [showModal1, setShowModal1] = React.useState(visible);
-//    React.useEffect(() => {
-//       toggleModal1();
-//    }, [visible]);
-//    const toggleModal1 = () => {
-//       if (visible){
-//          setShowModal1(true);
-//       } else {
-//          setShowModal1(false);
-//       }
-//    }
-//    return < Modal transparent visible = {showModal1}>
-//       <View style = {styles.modalBackground1}>
-//          <View style = {styles.modalContainer1}>
-//             {children1}
-//          </View>
-//       </View>
-//    </Modal>
-// };
-
 export default function Home({ navigation, role, userId }) {
    const [modalVisible, setModalVisible] = useState(false);
 
@@ -102,7 +81,7 @@ export default function Home({ navigation, role, userId }) {
          items.push(<Text>{data[i].Message}</Text>)
       }
    
-  console.log (JSON.stringify(data));
+//   console.log (JSON.stringify(data));
    return (
       <View style = {styles.Container}>
         {/* POST BUTTON  */}
