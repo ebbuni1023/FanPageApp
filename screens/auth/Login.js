@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Button, } from 'react-native'
 import auth from '@react-native-firebase/auth'
 import { TextInput } from 'react-native-paper';
 import { globalStyles } from '../../utils/globalStyles'
-import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
+import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-google-signin/google-signin';
 GoogleSignin.configure({
   webClientId: '177920797564-hadbcbgssgf848mod9bp85e77av7gbj8.apps.googleusercontent.com',
 });
@@ -16,7 +16,7 @@ export default function Register() {
    const [email, setEmail] = useState()
    const [password, setPassword] = useState()
    const [name, setName] = useState()
-
+   const [user, setUser] = useState()
    function onLogin() {
       auth().signInWithEmailAndPassword(email, password)
    }
@@ -51,7 +51,9 @@ export default function Register() {
    useEffect(() => {
       GoogleSignin.configure({
         scopes: ['email'], // what API you want to access on behalf of the user, default is email and profile
+        
         webClientId: '177920797564-j6b1b8fg9860k8f14v393etop1crddqp.apps.googleusercontent.com',
+        webClientId: '177920797564-hadbcbgssgf848mod9bp85e77av7gbj8.apps.googleusercontent.com',
         offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
       });
       const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
@@ -109,15 +111,15 @@ export default function Register() {
               />
          </View>
          
-         <View style={styles.buttonContainer}>
+         {/* <View style={styles.buttonContainer}>
               {!loggedIn && <Text>You are currently logged out</Text>}
-              {/* {loggedIn && (
+              {loggedIn && (
                 <Button
                   onPress={this.signOut}
                   title="LogOut"
                   color="red"></Button>          
-              )} */}
-         </View>
+              )}
+         </View> */}
       </View>
    )
 }

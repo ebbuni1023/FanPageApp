@@ -10,7 +10,8 @@ import Register from './screens/auth/Register'
 import Home from './screens/main/Home'
 import firestore from '@react-native-firebase/firestore';
 import SplashScreen from 'react-native-splash-screen';
-
+import {LogBox } from 'react-native';
+LogBox.ignoreLogs(['Reanimated 2']);
 
 const Stack = createStackNavigator()
 const Tab = createMaterialTopTabNavigator()
