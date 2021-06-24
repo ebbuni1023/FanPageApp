@@ -9,7 +9,9 @@ import Register from '../auth/Register';
 
 import moment from "moment";
 
-const message = [];
+// const message = [];
+const items= [];
+
 
 const ModalPop = ({visible, children})=> {
    const [showModal, setShowModal] = React.useState(visible);
@@ -60,14 +62,11 @@ export default function Home({ navigation, role, userId }) {
       // setPost('');
    }
 
-   
    const [data, setData] = useState([]);
    useEffect(() => {
       firestore().collection('Post').get()
         .then(snapshot => {
           let arrayData = snapshot.docs.map((item)=>{
-             message.push({ item, message: item.id}
-               );
             return item.data();
           })
           setData(arrayData);
@@ -76,13 +75,10 @@ export default function Home({ navigation, role, userId }) {
           console.log('Error getting documents', err);
         });
   });
-
-//   querySnapshot.forEach(documentSnapshot => { 
-//      messages.push({ ...documentSnapshot.data(), 
-//       key: documentSnapshot.id, 
-//    }); 
-// });
-
+      for(let i=0; i < data.length ; i++) {
+         items.push(<Text>{data[i].Message}</Text>)
+      }
+   
   console.log (JSON.stringify(data));
    return (
       <View style = {styles.logoffConatiner}>
@@ -95,8 +91,7 @@ export default function Home({ navigation, role, userId }) {
                   </TouchableOpacity>
                </View>
             </View>
-            <Text> POST YOUR WORDS </Text>
-
+            <Text> POST YOUR WORDS  </Text>
             <TextInput label={'write post'} value={post} onChangeText={setPost} />
             <Button title ="POST" onPress={() => addPost() & setVisible(false)}> Add POST </Button>
 
@@ -105,15 +100,11 @@ export default function Home({ navigation, role, userId }) {
            <Text>To upload the message please click below + sign </Text>
            <View style = {styles.pluscontainer}>
               {role === "customer" ?  <Text>Customer</Text> : <Button title="+" onPress = {() => setVisible(true) }></Button>}
-           </View>  
-           <Text>{post}</Text>
+              {data.map((value, index) => {
+               return <Text key={index}>{value.Message}</Text>
+               })}
+           </View>
         </View>
-
-        <FlatList data={message} 
-        renderItem={({ item }) => ( 
-        <View style={{ height: 50, flex: 1, alignItems: 'center', justifyContent: 'center' }}> 
-        <Text>Message: {item.message}</Text> 
-        </View> )} />
       </View>
    );
 }
