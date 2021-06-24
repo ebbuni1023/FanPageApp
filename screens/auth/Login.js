@@ -54,8 +54,16 @@ export default function Register() {
         webClientId: '177920797564-j6b1b8fg9860k8f14v393etop1crddqp.apps.googleusercontent.com',
         offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
       });
+      const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+      return subscriber; // unsubscribe on unmount
     }, []);
 
+    function onAuthStateChanged(user) {
+      setUser(user);
+      console.log(user);
+      if (user) setloggedIn(true);
+    }
+    
     signOut = async () => {
       try {
         await GoogleSignin.revokeAccess();
@@ -99,15 +107,15 @@ export default function Register() {
                 onPress={this._signIn}
               />
          </View>
+         
          <View style={styles.buttonContainer}>
               {!loggedIn && <Text>You are currently logged out</Text>}
-              {loggedIn && (
+              {/* {loggedIn && (
                 <Button
                   onPress={this.signOut}
                   title="LogOut"
-                  color="red"></Button>
-                  
-              )}
+                  color="red"></Button>          
+              )} */}
          </View>
       </View>
    )

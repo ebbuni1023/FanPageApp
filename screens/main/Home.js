@@ -9,6 +9,8 @@ import Register from '../auth/Register';
 
 import moment from "moment";
 
+const message = [];
+
 const ModalPop = ({visible, children})=> {
    const [showModal, setShowModal] = React.useState(visible);
    React.useEffect(() => {
@@ -57,6 +59,31 @@ export default function Home({ navigation, role, userId }) {
       });
       // setPost('');
    }
+
+   
+   const [data, setData] = useState([]);
+   useEffect(() => {
+      firestore().collection('Post').get()
+        .then(snapshot => {
+          let arrayData = snapshot.docs.map((item)=>{
+             message.push({ item, message: item.id}
+               );
+            return item.data();
+          })
+          setData(arrayData);
+        })
+        .catch(err => {
+          console.log('Error getting documents', err);
+        });
+  });
+
+//   querySnapshot.forEach(documentSnapshot => { 
+//      messages.push({ ...documentSnapshot.data(), 
+//       key: documentSnapshot.id, 
+//    }); 
+// });
+
+  console.log (JSON.stringify(data));
    return (
       <View style = {styles.logoffConatiner}>
         <Button title="LogOff" onPress={this.logoff} />
@@ -78,18 +105,17 @@ export default function Home({ navigation, role, userId }) {
            <Text>To upload the message please click below + sign </Text>
            <View style = {styles.pluscontainer}>
               {role === "customer" ?  <Text>Customer</Text> : <Button title="+" onPress = {() => setVisible(true) }></Button>}
-              <Text>{post}</Text>
-           </View>
-           {/* <FlatList 
-              data={[
-                 {key: [post]},
-              ]}
-              renderItem={({item}) => <Text style={{flex: 1, fontSize: 12, alignItems: 'center', }}>
-                 {item.key}
-              </Text>}/> */}
+           </View>  
+           <Text>{post}</Text>
         </View>
+
+        <FlatList data={message} 
+        renderItem={({ item }) => ( 
+        <View style={{ height: 50, flex: 1, alignItems: 'center', justifyContent: 'center' }}> 
+        <Text>Message: {item.message}</Text> 
+        </View> )} />
       </View>
-   )
+   );
 }
 
 signOut = async () => {
