@@ -105,7 +105,22 @@ export default function Home({ navigation, role, userId }) {
   console.log (JSON.stringify(data));
    return (
       <View style = {styles.Container}>
-        <Button title="LogOff" onPress={this.logoff} />
+        {/* POST BUTTON  */}
+        <View style = {styles.addContainer}>
+           <View style = {styles.headerContainer}>
+            <Text style ={ styles.welcomeText }>Welcome To Jiyoung's FanPage</Text>
+           </View>
+           <View style = {styles.pluscontainer}>
+              {role === "admin" ?  <Button title="+" onPress = {() => setVisible(true) }></Button> : <Text>Customer</Text>}
+           </View>
+           <View style = {styles.listCon}>
+              {data.map((value, index) => {
+               return <Text key={index}>{value.Message}</Text>
+               })} 
+              </View>
+        </View>
+        {/* POST BUTTON  */}
+
          {/* MODAL */}
          <ModalPop visible = {visible}>
             <View style = {{alignItems: 'center'}}>
@@ -121,64 +136,41 @@ export default function Home({ navigation, role, userId }) {
          </ModalPop>
          {/* MODAL */}
          
-         {role === "admin" ?  <Button title="+" onPress = {() => setVisible(true) }></Button> : <Text>Customer</Text>}
          {/* ASK TO LOG OUT MODAL BUTTON  */}
-         <ModalPop visible = {visible}>
-            <View style = {{alignItems: 'center'}}>
-               <View style = { styles.header1 }>
-                  <TouchableOpacity onPress = {() => setvisible(false)}>
-                     <Button title = "X" onPress={() => setvisible(false)}></Button>
-                  </TouchableOpacity>
+            <View style={styles.centeredView}>
+               <Modal
+               animationType="slide"
+               transparent={true}
+               visible={modalVisible}
+               onRequestClose={() => {
+                  Alert.alert("Modal has been closed.");
+                  setModalVisible(!modalVisible);
+               }}
+               >
+               <View style={styles.centeredView}>
+                  <View style={styles.modalView}>
+                     <Text style={styles.modalText}>Do you want to Sign Out?</Text>
+                     <Pressable
+                     style={[styles.button, styles.buttonClose]}
+                     onPress={() => setModalVisible(!modalVisible)}
+                     >
+                     <Text style={styles.textStyle}>No</Text>
+                     </Pressable>
+                     <Button style={styles.textStyle} title="Yes" onPress={this.logoff} />
+                  </View>
                </View>
+               </Modal>
             </View>
-            <Text> POST YOUR dldldldldl  </Text>
-            <TextInput label={'write post'} value = { post } onChangeText = { setPost } />
-            <Button title ="POST" onPress={() => addPost() & setvisible(false)}> Add POST </Button>
-         </ModalPop>
-         {/* ASK TO LOG OUT MODAL BUTTON  */}
-         {/* <Text style={styles.textStyle}>Hide Modal</Text>
-         <Text style={styles.textStyle}>Hide Modal</Text> */}
+               <View style = {styles.logoutContainer}>
+                  <Pressable
+                     style={[styles.button, styles.buttonOpen]}
+                     onPress={() => setModalVisible(true)}
+                     >
+                           <Text style={styles.textStyle}>Log Out</Text>
+                  </Pressable>
+               </View>
 
-         <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Do you want to Sign Out?</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle}>No</Text>
-            </Pressable>
-            <Button style={styles.textStyle} title="Yes" onPress={this.logoff} />
-
-          </View>
-        </View>
-      </Modal>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.textStyle}>Show Modal</Text>
-      </Pressable>
-    </View>
-
-        <View style = {styles.addContainer}>
-           <View style = {styles.pluscontainer}>
-              {role === "admin" ?  <Button title="+" onPress = {() => setVisible(true) }></Button> : <Text>Customer</Text>}
-              {data.map((value, index) => {
-               return <Text key={index}>{value.Message}</Text>
-               })}
-           </View>
-        </View>
+            {/* ASK TO LOG OUT MODAL BUTTON  */}
       </View>
    );
 }
@@ -195,17 +187,24 @@ signOut = async () => {
  };
 const styles = StyleSheet.create({
    Container : {
+      flex: 1,
       marginTop: 50,
+      justifyContent: 'center',
+   },
+   welcomeText: {
+      fontSize: 20,
    },
 
    logoffConatiner:{
       justifyContent:'center',
       alignItems: 'center',
       flex: 1,
+      
    },
    header: {
       marginHorizontal: 10,
-      marginVertical: 10
+      marginVertical: 10,
+      
    },
    addIcon: {
       position: 'absolute',
@@ -229,22 +228,7 @@ const styles = StyleSheet.create({
       paddingVertical: 30,
       borderRadius: 20, 
       elevation: 20,
-   },
-
-   modalBackground1:{
-      flex: 1,
-      backgroundColor: 'rgba(0,0,0,0.5)',
-      justifyContent: 'center',
-      alignItems: 'center',
-   },
-
-   modalContainer1:{
-      width: "80%",
-      height: "50%",
-      backgroundColor: 'white', paddingHorizontal: 20, 
-      paddingVertical: 30,
-      borderRadius: 20, 
-      elevation: 20,
+      
    },
 
    header: {
@@ -252,22 +236,18 @@ const styles = StyleSheet.create({
       height: 50,
       flexDirection: 'column',
       alignItems: "flex-end",
-      justifyContent: 'flex-start'
+      justifyContent: 'flex-start',
+
    },
 
-   header1: {
-      width: '100%',
-      height: 50,
-      flexDirection: 'column',
-      alignItems: "flex-end",
-      justifyContent: 'flex-start'
-   },
 
    centeredView: {
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
-      marginTop: 22
+      marginTop: 22,
+      // backgroundColor: 'yellow',
+
     },
     modalView: {
       margin: 20,
@@ -276,18 +256,21 @@ const styles = StyleSheet.create({
       padding: 35,
       alignItems: "center",
       shadowColor: "#000",
+      
       shadowOffset: {
         width: 0,
         height: 2
       },
       shadowOpacity: 0.25,
       shadowRadius: 4,
-      elevation: 5
+      elevation: 5,
+
     },
     button: {
       borderRadius: 20,
       padding: 10,
-      elevation: 2
+      elevation: 2,
+
     },
     buttonOpen: {
       backgroundColor: "#F194FF",
@@ -303,5 +286,34 @@ const styles = StyleSheet.create({
     modalText: {
       marginBottom: 15,
       textAlign: "center"
+    },
+    headerContainer:{
+       justifyContent: 'center',
+       alignItems:'center',
+       backgroundColor: '#F194FF',
+       height: 60,
+    },
+
+    logoutContainer: {
+      height: 100,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      // backgroundColor: 'pink',
+    },
+
+    addContainer: {
+       height: '50%',
+       justifyContent: 'center',
+      //  backgroundColor: 'pink',
+    },
+
+    listCon : {
+       height: '80%',
+       flexDirection: 'column',
+      //  backgroundColor: 'yellow',
+      //  justifyContent: 'center',
+       textAlign:'center',
+       alignItems:'center',
     }
 })
