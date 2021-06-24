@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, Pressable, FlatList, StyleSheet, Modal, Button, TouchableOpacity, Alert } from 'react-native'
 import auth from '@react-native-firebase/auth';
+import firebase from 'firebase';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import { TextInput } from 'react-native-gesture-handler';
@@ -42,28 +43,29 @@ export default function Home({ navigation, role, userId }) {
       .signOut()
       .then(() => console.log('User Signed out!'));
       return (
-         Alert.alert('u signed out')
+         Alert.alert('you signed out')
       )
    }
 
    // MODAL
    const [visible, setVisible] = React.useState(false);
-   // const [visible1, setVisible1] = React.useState(false);
 
-   // POST
+   /* POST  */
    const ref = firestore().collection('Post');
    const [post, setPost] = useState('');
    const today = moment();
    const DateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+   
    async function addPost(){
-      await ref.add({
+      await ref.doc().set({
          Message: post,
          DateTime:moment().format('YYYY-MM-DD HH:mm:ss'),
          UniqueID: userId,
+         Date: firestore.Timestamp.fromDate(new Date),
       });
       // setPost('');
    }
-
+  
    const [data, setData] = useState([]);
    useEffect(() => {
       firestore().collection('Post').get()
@@ -77,10 +79,24 @@ export default function Home({ navigation, role, userId }) {
           console.log('Error getting documents', err);
         });
   });
+
       for(let i=0; i < data.length ; i++) {
          items.push(<Text>{data[i].Message}</Text>)
       }
-   
+
+      function test(){
+         for(let i = 0; i < data.length ; i++) {
+            if (data[i].DateTime > data[i+1]) {
+               items.push(<Text>{data[i].DateTime}</Text>)
+            } else {
+               items.push(<Text>{Data[i+1].DateTime}</Text>)
+            }
+         }
+      }
+
+
+   /* POST  */
+   // JSON.stringify(sortMyObj, Object.keys(sortMyObj).sort());
 //   console.log (JSON.stringify(data));
    return (
       <View style = {styles.Container}>
@@ -90,16 +106,19 @@ export default function Home({ navigation, role, userId }) {
             <Text style ={ styles.welcomeText }>Welcome To Jiyoung's FanPage</Text>
            </View>
            <View style = {styles.pluscontainer}>
-              {role === "admin" ?  <Button title="+" onPress = {() => setVisible(true) }></Button> : <Text>Customer</Text>}
+              {role === "admin" ?  <Button title="+" onPress = {() => setVisible(true) }></Button> : <Text style = {styles.textStyle}> This is what Jiyoung said to you ! </Text>}
            </View>
            <View style = {styles.listCon}>
               {data.map((value, index) => {
                return <Text key={index}>{value.Message}</Text>
                })} 
+
+               {data.map((value, index) => {
+               return <Text key={index}>{value.DateTime}</Text>
+               })} 
               </View>
         </View>
         {/* POST BUTTON  */}
-
          {/* MODAL */}
          <ModalPop visible = {visible}>
             <View style = {{alignItems: 'center'}}>
@@ -145,7 +164,7 @@ export default function Home({ navigation, role, userId }) {
                      style={[styles.button, styles.buttonOpen]}
                      onPress={() => setModalVisible(true)}
                      >
-                           <Text style={styles.textStyle}>Log Out</Text>
+                  <Text style={styles.textStyle}>Log Out</Text>
                   </Pressable>
                </View>
 
@@ -258,7 +277,7 @@ const styles = StyleSheet.create({
       backgroundColor: "#2196F3",
     },
     textStyle: {
-      color: "white",
+      color: "black",
       fontWeight: "bold",
       textAlign: "center"
     },
@@ -275,9 +294,9 @@ const styles = StyleSheet.create({
 
     logoutContainer: {
       height: 100,
-      flexDirection: 'column',
+      flexDirection: 'row',
       justifyContent: 'center',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       // backgroundColor: 'pink',
     },
 

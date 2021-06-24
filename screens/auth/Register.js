@@ -76,6 +76,7 @@ export default function Register() {
             secureTextEntry={true}
             placeholder='Password at least 8 digits'
             style={globalStyles.primaryInput}
+            secureTextEntry={true}
             onChangeText={(text) => setPassword(text)}
          />
 

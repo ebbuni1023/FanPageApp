@@ -90,6 +90,7 @@ export default function Register() {
             value={password}
             placeholder='Password'
             style={globalStyles.primaryInput}
+            secureTextEntry={true}
             onChangeText={(text) => setPassword(text)}
          />
 
