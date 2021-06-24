@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, FlatList, StyleSheet, Modal, Button, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, Pressable, FlatList, StyleSheet, Modal, Button, TouchableOpacity, Alert } from 'react-native'
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -34,7 +34,29 @@ const ModalPop = ({visible, children})=> {
    </Modal>
 };
 
+// const ModalPop1 = ({visible, children1})=> {
+//    const [showModal1, setShowModal1] = React.useState(visible);
+//    React.useEffect(() => {
+//       toggleModal1();
+//    }, [visible]);
+//    const toggleModal1 = () => {
+//       if (visible){
+//          setShowModal1(true);
+//       } else {
+//          setShowModal1(false);
+//       }
+//    }
+//    return < Modal transparent visible = {showModal1}>
+//       <View style = {styles.modalBackground1}>
+//          <View style = {styles.modalContainer1}>
+//             {children1}
+//          </View>
+//       </View>
+//    </Modal>
+// };
+
 export default function Home({ navigation, role, userId }) {
+   const [modalVisible, setModalVisible] = useState(false);
 
    logoff = () => {
       auth ()
@@ -47,6 +69,7 @@ export default function Home({ navigation, role, userId }) {
 
    // MODAL
    const [visible, setVisible] = React.useState(false);
+   // const [visible1, setVisible1] = React.useState(false);
 
    // POST
    const ref = firestore().collection('Post');
@@ -81,25 +104,76 @@ export default function Home({ navigation, role, userId }) {
    
   console.log (JSON.stringify(data));
    return (
-      <View style = {styles.logoffConatiner}>
+      <View style = {styles.Container}>
         <Button title="LogOff" onPress={this.logoff} />
+         {/* MODAL */}
          <ModalPop visible = {visible}>
             <View style = {{alignItems: 'center'}}>
                <View style = { styles.header}>
                   <TouchableOpacity onPress = {() => setVisible(false)}>
-                  <Button title = "X" onPress={() => setVisible(false)}></Button>
+                     <Button title = "X" onPress={() => setVisible(false)}></Button>
                   </TouchableOpacity>
                </View>
             </View>
             <Text> POST YOUR WORDS  </Text>
             <TextInput label={'write post'} value={post} onChangeText={setPost} />
             <Button title ="POST" onPress={() => addPost() & setVisible(false)}> Add POST </Button>
-
          </ModalPop>
+         {/* MODAL */}
+         
+         {role === "admin" ?  <Button title="+" onPress = {() => setVisible(true) }></Button> : <Text>Customer</Text>}
+         {/* ASK TO LOG OUT MODAL BUTTON  */}
+         <ModalPop visible = {visible}>
+            <View style = {{alignItems: 'center'}}>
+               <View style = { styles.header1 }>
+                  <TouchableOpacity onPress = {() => setvisible(false)}>
+                     <Button title = "X" onPress={() => setvisible(false)}></Button>
+                  </TouchableOpacity>
+               </View>
+            </View>
+            <Text> POST YOUR dldldldldl  </Text>
+            <TextInput label={'write post'} value = { post } onChangeText = { setPost } />
+            <Button title ="POST" onPress={() => addPost() & setvisible(false)}> Add POST </Button>
+         </ModalPop>
+         {/* ASK TO LOG OUT MODAL BUTTON  */}
+         {/* <Text style={styles.textStyle}>Hide Modal</Text>
+         <Text style={styles.textStyle}>Hide Modal</Text> */}
+
+         <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Do you want to Sign Out?</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.textStyle}>No</Text>
+            </Pressable>
+            <Button style={styles.textStyle} title="Yes" onPress={this.logoff} />
+
+          </View>
+        </View>
+      </Modal>
+      <Pressable
+        style={[styles.button, styles.buttonOpen]}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={styles.textStyle}>Show Modal</Text>
+      </Pressable>
+    </View>
+
         <View style = {styles.addContainer}>
-           <Text>To upload the message please click below + sign </Text>
            <View style = {styles.pluscontainer}>
-              {role === "customer" ?  <Text>Customer</Text> : <Button title="+" onPress = {() => setVisible(true) }></Button>}
+              {role === "admin" ?  <Button title="+" onPress = {() => setVisible(true) }></Button> : <Text>Customer</Text>}
               {data.map((value, index) => {
                return <Text key={index}>{value.Message}</Text>
                })}
@@ -120,6 +194,10 @@ signOut = async () => {
    }
  };
 const styles = StyleSheet.create({
+   Container : {
+      marginTop: 50,
+   },
+
    logoffConatiner:{
       justifyContent:'center',
       alignItems: 'center',
@@ -153,11 +231,77 @@ const styles = StyleSheet.create({
       elevation: 20,
    },
 
+   modalBackground1:{
+      flex: 1,
+      backgroundColor: 'rgba(0,0,0,0.5)',
+      justifyContent: 'center',
+      alignItems: 'center',
+   },
+
+   modalContainer1:{
+      width: "80%",
+      height: "50%",
+      backgroundColor: 'white', paddingHorizontal: 20, 
+      paddingVertical: 30,
+      borderRadius: 20, 
+      elevation: 20,
+   },
+
    header: {
       width: '100%',
       height: 50,
       flexDirection: 'column',
       alignItems: "flex-end",
       justifyContent: 'flex-start'
-   }
+   },
+
+   header1: {
+      width: '100%',
+      height: 50,
+      flexDirection: 'column',
+      alignItems: "flex-end",
+      justifyContent: 'flex-start'
+   },
+
+   centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5
+    },
+    button: {
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2
+    },
+    buttonOpen: {
+      backgroundColor: "#F194FF",
+    },
+    buttonClose: {
+      backgroundColor: "#2196F3",
+    },
+    textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: "center"
+    }
 })
