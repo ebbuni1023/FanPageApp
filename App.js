@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator, SafeAreaView, StyleSheet} from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
@@ -75,12 +75,14 @@ export default function App() {
 
   if(!loggedIn) {
     return (
+      <SafeAreaView style={styles.container}>
       <NavigationContainer onReady={onNavigationReady}>
         <Tab.Navigator initialRouteName='Login'>
-          <Tab.Screen name='Login' component={Login} />
+          <Tab.Screen name='Login' component={Login}  />
           <Tab.Screen name='Register' component={Register} />
         </Tab.Navigator>
       </NavigationContainer>
+      </SafeAreaView>
     )
   }
 
@@ -103,3 +105,9 @@ export default function App() {
     </NavigationContainer>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
