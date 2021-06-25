@@ -3,7 +3,9 @@ Summer 2021 React-native FanPageApp Project
 
 ## Table of contents
 * [Setup](#technologies)
-* [Requirement for this project](#Requirement)
+* [Requirement for IOS](#Requirement for IOS)
+* [Requirement for Android](#Requirement for Android)
+
 
 ## Technologies
 Project is created with:
