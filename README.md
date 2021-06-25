@@ -41,9 +41,20 @@ $ npx ract-native run-ios
 
 After Register, I let jiyoung@gmail.com will be the admin.
 
+
 * Admin
+
 Here you will see the + sign to add post because jiyoung@gmail.com is now admin.
+
 <img src = "https://github.com/ebbuni1023/FanPageApp/blob/main/screens/assets/Admin.gif" width='148' height='300'/>
+
+* Post by Admin
+
+![Post](https://user-images.githubusercontent.com/56244911/123373049-524ce780-d54a-11eb-8d43-2e86086bbb44.gif)
+
+* Log out
+
+![Logout](https://user-images.githubusercontent.com/56244911/123373103-6e508900-d54a-11eb-8681-a250159101e6.gif)
 
 
 
