@@ -56,6 +56,17 @@ Here you will see the + sign to add post because jiyoung@gmail.com is now admin.
 
 ![Logout](https://user-images.githubusercontent.com/56244911/123373103-6e508900-d54a-11eb-8681-a250159101e6.gif)
 
+* Customer Login and they can see posts by Admin
+
+![Customer](https://user-images.githubusercontent.com/56244911/123373303-cab3a880-d54a-11eb-8341-47eb2c945924.gif)
+
+## Requirement for Android
+
+
+
+
+
+
 
 
 
