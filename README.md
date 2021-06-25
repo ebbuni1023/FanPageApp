@@ -19,9 +19,12 @@ $ yarn install or npm install
 $ npx react-native start
 and open another terminal and do below command
 $ npx ract-native run-ios
+if using android then 
+$ react-native run-android
 ```
 
 ## Requirement for IOS
+
 * Splash Screen
 
 <img src ="https://github.com/ebbuni1023/FanPageApp/blob/main/screens/assets/Splash.gif" width='148' height='300'/>
@@ -61,6 +64,30 @@ Here you will see the + sign to add post because jiyoung@gmail.com is now admin.
 ![Customer](https://user-images.githubusercontent.com/56244911/123373303-cab3a880-d54a-11eb-8341-47eb2c945924.gif)
 
 ## Requirement for Android
+
+* Splash Screen
+
+<img src ="https://github.com/ebbuni1023/FanPageApp/blob/main/screens/assets/splashA.gif" width='148' height='300'/>
+
+* Google Sign in
+
+<img src = "https://github.com/ebbuni1023/FanPageApp/blob/main/screens/assets/googleL.gif" width='148' height='300'/>
+
+* Register & Customer Login and they can see posts by Admin
+
+<img src = "https://github.com/ebbuni1023/FanPageApp/blob/main/screens/assets/custom.gif" width='148' height='300'/>
+
+They can't see the + since they are registerd as customer
+
+* Post by Admin
+
+Here you will see the + sign to add post because jiyoung@gmail.com is admin. We made admin from Ios.
+
+<img src = "https://github.com/ebbuni1023/FanPageApp/blob/main/screens/assets/adminpost.gif" width='148' height='300'/>
+
+* Log out
+
+<img src = "https://github.com/ebbuni1023/FanPageApp/blob/main/screens/assets/logout.gif" width='148' height='300'/>
 
 
 
