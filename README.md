@@ -90,6 +90,8 @@ Here you will see the + sign to add post because jiyoung@gmail.com is admin. We 
 <img src = "https://github.com/ebbuni1023/FanPageApp/blob/main/screens/assets/logout.gif" width='148' height='300'/>
 
 
+Github link : https://github.com/ebbuni1023/FanPageApp
+
 
 
 
