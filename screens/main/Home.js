@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Pressable, FlatList, StyleSheet, Modal, Button, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, Pressable, SafeAreaView, FlatList, StyleSheet, Modal, Button, TouchableOpacity, Alert } from 'react-native'
 import auth from '@react-native-firebase/auth';
 import firebase from 'firebase';
 import firestore from '@react-native-firebase/firestore';
@@ -100,7 +100,7 @@ export default function Home({ navigation, role, userId }) {
    // JSON.stringify(sortMyObj, Object.keys(sortMyObj).sort());
 //   console.log (JSON.stringify(data).orderBy('DataTime'));
    return (
-      <View style = {styles.Container}>
+      <SafeAreaView style = {styles.Container}>
         {/* POST BUTTON  */}
         <View style = {styles.addContainer}>
            <View style = {styles.headerContainer}>
@@ -170,7 +170,7 @@ export default function Home({ navigation, role, userId }) {
                </View>
 
             {/* ASK TO LOG OUT MODAL BUTTON  */}
-      </View>
+      </SafeAreaView>
    );
 }
 
