@@ -55,20 +55,21 @@ export default function Home({ navigation, role, userId }) {
    const [post, setPost] = useState('');
    const today = moment();
    const DateTime = moment().format('YYYY-MM-DD HH:mm:ss');
-   
+   const Date = firestore().collection('Datetime');
+
    async function addPost(){
       await ref.doc().set({
          Message: post,
          DateTime:moment().format('YYYY-MM-DD HH:mm:ss'),
          UniqueID: userId,
-         Date: firestore.Timestamp.fromDate(new Date),
+         // Date: firestore.Timestamp.fromDate(new Date),
       });
       // setPost('');
    }
   
    const [data, setData] = useState([]);
    useEffect(() => {
-      firestore().collection('Post').get()
+      firestore().collection('Post').orderBy('DateTime').get()
         .then(snapshot => {
           let arrayData = snapshot.docs.map((item)=>{
             return item.data();
@@ -97,7 +98,7 @@ export default function Home({ navigation, role, userId }) {
 
    /* POST  */
    // JSON.stringify(sortMyObj, Object.keys(sortMyObj).sort());
-//   console.log (JSON.stringify(data));
+//   console.log (JSON.stringify(data).orderBy('DataTime'));
    return (
       <View style = {styles.Container}>
         {/* POST BUTTON  */}
@@ -110,12 +111,12 @@ export default function Home({ navigation, role, userId }) {
            </View>
            <View style = {styles.listCon}>
               {data.map((value, index) => {
-               return <Text key={index}>{value.Message}</Text>
+               return <Text key={index}>{value.Message} : {value.DateTime}</Text>
                })} 
 
-               {data.map((value, index) => {
+               {/* {data.map((value, index) => {
                return <Text key={index}>{value.DateTime}</Text>
-               })} 
+               })}  */}
               </View>
         </View>
         {/* POST BUTTON  */}
